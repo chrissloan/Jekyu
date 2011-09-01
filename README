@@ -1,0 +1,13 @@
+Requirements:
+
+* henrik-jekyll gem - utilizes haml for layout files
+* compass gem - to build out your styles
+
+Starting:
+
+cd into project directory and open two terminal instances to run the following two commands separately.
+
+1. $ jekyll --server
+2. $ compass watch
+
+Push and deploy to Heroku as normal. Added bonus is masquerade file modified to use with Facebook.

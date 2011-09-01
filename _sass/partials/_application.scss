@@ -1,0 +1,15 @@
+article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary{
+	display: block;
+  padding: 0;
+  margin: 0;
+}
+
+body{
+  @include blueprint-typography(true);
+  @include blueprint-utilities;
+  @include blueprint-interaction;
+}
+
+form{
+  @include blueprint-form;
+}

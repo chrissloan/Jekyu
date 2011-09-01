@@ -1,0 +1,67 @@
+!!!5
+
+%html{:lang => 'en', :'xml:lang' => 'en'}
+  %head
+    %meta{:'http-equiv' => 'Content-Type', :content => 'text/html; charset=UTF-8'}
+    %title
+      = "#{page.title} – In theaters 9.16.11"
+
+    %link{:href => "css/screen.css", :rel => 'stylesheet'}/
+  
+    /[if IE]
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    %script{:src => "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"}
+    %script{:src => "/javascripts/application.js"}
+    %script{:src => "/javascripts/video.js"}
+      
+  %body
+    #fb-root
+    #wrapper
+      #{content}
+
+    :javascript
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId: '185350981533323', 
+          status: true, 
+          cookie: true,
+          xfbml: true
+        });
+      };
+      (function() {
+        var e = document.createElement('script'); e.async = true;
+        e.src = document.location.protocol +
+          '//connect.facebook.net/en_US/all.js';
+        document.getElementById('fb-root').appendChild(e);
+      }());
+        
+      $(window).load(function() {
+        FB.Canvas.setAutoResize();
+        FB.Canvas.setSize();
+        
+        FB.login(function(response) {
+          if (response.session) {
+            var user_id = response.session.uid;
+            var page_id = "130431886971963"; 
+            var fql_query = "SELECT uid FROM page_fan WHERE page_id = "+page_id+"and uid="+user_id;
+            var the_query = FB.Data.query(fql_query);
+
+            the_query.wait(function(rows) {
+              if (rows.length == 1 && rows[0].uid == user_id) {
+                $("#fb-liked").show();
+
+                var vid = VideoJS.setup('el_video');
+                $(".scrollable").scrollable({circular: true});
+
+              } else {
+                $("#fb-unliked").show();
+              }
+            });
+
+
+        } else {
+          // user is not logged in
+        }
+      });
+        
+      });
